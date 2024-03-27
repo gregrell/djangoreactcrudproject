@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 
 import ListItem from '../components/ListItem'
+import NotePage from './NotePage'
 
 const NotesListPage = () => {
 
