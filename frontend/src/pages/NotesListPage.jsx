@@ -21,7 +21,7 @@ const NotesListPage = () => {
     <div>
       <div className="notes-list">
         {notes.map((note) => (
-          <Link to={`note/${note.id}`}>
+          <Link to={`note/${note.id}`} key={note.id}>
             <ListItem note={note} key={note.id} />
           </Link>
         ))}
