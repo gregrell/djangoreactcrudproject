@@ -20,7 +20,8 @@ const NotePage = ({ params }) => {
   return (
     <>
       <button onClick={() => navigate(-1)}> back </button>
-      Body of {id}:{note && note.body}
+      Body of {id}:
+      <textarea defaultValue={note?.body} />
     </>
   );
 };
