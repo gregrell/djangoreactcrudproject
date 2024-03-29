@@ -1,10 +1,11 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const NotePage = ({ params }) => {
   const [note, setNote] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getNote();
@@ -18,6 +19,7 @@ const NotePage = ({ params }) => {
 
   return (
     <>
+      <button onClick={() => navigate(-1)}> back </button>
       Body of {id}:{note && note.body}
     </>
   );
