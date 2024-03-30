@@ -8,8 +8,9 @@ from .models import Note
 
 from quickstart.serializers import GroupSerializer, UserSerializer, NoteSerializer
 
+
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().order_by('-date_joined')
+    queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -19,23 +20,26 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-@api_view(['GET'])
+
+@api_view(["GET"])
 def getNotes(request):
     notes = Note.objects.all()
     serializr = NoteSerializer(notes, many=True)
     return Response(serializr.data)
-    
-    
-@api_view(['GET'])
+
+
+@api_view(["GET"])
 def getNote(request, pk):
     notes = Note.objects.get(id=pk)
     serializr = NoteSerializer(notes, many=False)
     return Response(serializr.data)
 
-#fix the put
-@api_view(['PUT'])
-def updateNote(request, pk):
-    return response(request.data)
-    
-    
 
+# fix the put
+@api_view(["PUT"])
+def updateNote(request, pk):
+    obj = Note.objects.get(id=pk)
+    newbody = request.data.get("body")
+    obj.body = newbody
+    obj.save()
+    return Response(status=202)
