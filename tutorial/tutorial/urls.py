@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import routers
+from django.views.decorators.csrf import csrf_exempt
+
 
 from quickstart import views
 
@@ -33,7 +35,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("api/notes/", views.getNotes, name="notes"),
     path("api/notes/<str:pk>/update", views.updateNote, name="updatenote"),
-    path("api/notes/<str:pk>", views.getNote, name="note"),
+    path("api/notes/<str:pk>", csrf_exempt(views.getNote), name="note"),
 ]
 
 urlpatterns += router.urls

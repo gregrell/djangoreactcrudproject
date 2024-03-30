@@ -17,11 +17,31 @@ const NotePage = ({ params }) => {
     setNote(data);
   };
 
+  const handleinputchange = (e) => {
+    const textareavalue = e.target.value;
+    setNote({ body: textareavalue });
+  };
+
+  let updateNote = async () => {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(note),
+    };
+
+    const response = await fetch(`/api/notes/${id}/update`, requestOptions);
+  };
+
+  const handleBackButtonClick = () => {
+    updateNote();
+    navigate(-1);
+  };
+
   return (
     <>
-      <button onClick={() => navigate(-1)}> back </button>
+      <button onClick={handleBackButtonClick}> back </button>
       Body of {id}:
-      <textarea defaultValue={note?.body} />
+      <textarea defaultValue={note?.body} onChange={handleinputchange} />
     </>
   );
 };
