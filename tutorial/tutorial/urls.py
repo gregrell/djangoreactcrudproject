@@ -34,6 +34,7 @@ urlpatterns = [
     path("", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("api/notes/", views.getNotes, name="notes"),
+    path("api/notes/create/", csrf_exempt(views.createNote), name="createnote"),
     path("api/notes/<str:pk>/update", views.updateNote, name="updatenote"),
     path("api/notes/<str:pk>", csrf_exempt(views.getNote), name="note"),
 ]

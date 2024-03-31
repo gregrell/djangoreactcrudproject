@@ -42,3 +42,13 @@ def updateNote(request, pk):
     obj.body = newbody
     obj.save()
     return Response(status=202)
+
+@api_view(["POST"])
+def createNote(request):
+    data = request.data
+    obj = Note.objects.create(
+        body=data['body']
+    )
+    serializer = NoteSerializer(obj, many=False)
+    return Response(serializer.data)
+
