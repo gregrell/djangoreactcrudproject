@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import ListItem from "../components/ListItem";
 import NotePage from "./NotePage";
 
 const NotesListPage = () => {
   const [notes, setNotes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getNotes();
@@ -17,8 +18,13 @@ const NotesListPage = () => {
     setNotes(data);
   };
 
+  const handleNewNote = () => {
+    navigate("note/new");
+  };
+
   return (
     <div>
+      <button onClick={handleNewNote}>New</button>
       <div className="notes-list">
         {notes.map((note) => (
           <Link to={`note/${note.id}`} key={note.id}>

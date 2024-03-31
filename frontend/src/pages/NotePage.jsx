@@ -8,7 +8,9 @@ const NotePage = ({ params }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getNote();
+    if (id != "new") {
+      getNote();
+    }
   }, [id]);
 
   let getNote = async () => {
@@ -33,7 +35,9 @@ const NotePage = ({ params }) => {
   };
 
   const handleBackButtonClick = () => {
-    updateNote();
+    if (id != "new") {
+      updateNote();
+    }
     navigate(-1);
   };
 
