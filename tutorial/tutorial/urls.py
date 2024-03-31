@@ -37,6 +37,7 @@ urlpatterns = [
     path("api/notes/create/", csrf_exempt(views.createNote), name="createnote"),
     path("api/notes/<str:pk>/update", views.updateNote, name="updatenote"),
     path("api/notes/<str:pk>", csrf_exempt(views.getNote), name="note"),
+    path("api/notes/<str:pk>/delete", csrf_exempt(views.deleteNote), name="deletenote"),
 ]
 
 urlpatterns += router.urls

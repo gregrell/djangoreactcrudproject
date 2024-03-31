@@ -52,3 +52,9 @@ def createNote(request):
     serializer = NoteSerializer(obj, many=False)
     return Response(serializer.data)
 
+
+@api_view(["POST"])
+def deleteNote(request, pk):
+    obj = Note.objects.get(id=pk)
+    obj.delete()
+    return Response(status=202)
