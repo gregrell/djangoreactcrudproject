@@ -23,7 +23,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 @api_view(["GET"])
 def getNotes(request):
-    notes = Note.objects.all()
+    notes = Note.objects.all().order_by('-updated').values()
     serializr = NoteSerializer(notes, many=True)
     return Response(serializr.data)
 

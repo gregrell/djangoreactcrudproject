@@ -8,7 +8,7 @@ const NotePage = ({ params }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id != "new") {
+    if (id !== "new") {
       getNote();
     }
   }, [id]);
@@ -34,9 +34,22 @@ const NotePage = ({ params }) => {
     const response = await fetch(`/api/notes/${id}/update`, requestOptions);
   };
 
+  let createNote = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(note),
+    };
+
+    const response = await fetch(`/api/notes/create/`, requestOptions);
+  };
+
   const handleBackButtonClick = () => {
-    if (id != "new") {
+    if (id !== "new") {
       updateNote();
+    }
+    if (id === "new") {
+      createNote();
     }
     navigate(-1);
   };
