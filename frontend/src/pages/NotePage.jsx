@@ -6,8 +6,12 @@ const NotePage = ({ params }) => {
   const [note, setNote] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [IsNew, setIsNew] = useState(false);
 
   useEffect(() => {
+    if (id === "new") {
+      setIsNew(true);
+    }
     if (id !== "new") {
       getNote();
     }
@@ -44,12 +48,28 @@ const NotePage = ({ params }) => {
     const response = await fetch(`/api/notes/create/`, requestOptions);
   };
 
+  let deleteNote = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(note),
+    };
+
+    const response = await fetch(`/api/notes/${id}/delete`, requestOptions);
+  };
   const handleBackButtonClick = () => {
-    if (id !== "new") {
+    if (!IsNew) {
       updateNote();
     }
-    if (id === "new") {
+    if (IsNew && note?.body) {
       createNote();
+    }
+    navigate(-1);
+  };
+
+  const handleDeleteButtonClick = () => {
+    if (!IsNew) {
+      deleteNote();
     }
     navigate(-1);
   };
@@ -57,6 +77,7 @@ const NotePage = ({ params }) => {
   return (
     <>
       <button onClick={handleBackButtonClick}> back </button>
+      {!IsNew && <button onClick={handleDeleteButtonClick}> delete </button>}
       Body of {id}:
       <textarea defaultValue={note?.body} onChange={handleinputchange} />
     </>
