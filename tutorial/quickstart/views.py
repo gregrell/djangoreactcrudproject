@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .models import Note
 
@@ -22,6 +23,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
+@permission_classes([AllowAny])
 def getNotes(request):
     notes = Note.objects.all().order_by('-updated').values()
     serializr = NoteSerializer(notes, many=True)
