@@ -158,4 +158,19 @@ REST_FRAMEWORK = {
 }
 
 
+import datetime
+JWT_AUTH = {
+   
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_AUTH_COOKIE': None,
+    'JWT_BLACKLIST_ENABLED': True,
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+
+
+}
+
 CORS_ALLOW_ALL_ORIGINS = True
