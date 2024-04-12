@@ -1,10 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <>
-      <h1>Header</h1>
       <p>user: Greg, password:3686</p>
+      <Link to="/">notes</Link>
+      <span>|</span>
+      <Link to="login">login</Link>
+      <br />
+      <br />
     </>
   );
 };
