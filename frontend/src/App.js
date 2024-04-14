@@ -11,6 +11,9 @@ import Header from "./components/Header.jsx";
 import NotesListPage from "./pages/NotesListPage.jsx";
 import NotePage from "./pages/NotePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import PrivateRoute from "./utils/PrivateRoute.jsx";
+
+//<Route path="/note/:id" Component={NotePage} />
 
 function App() {
   return (
@@ -19,8 +22,11 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" exact Component={NotesListPage} name="notes" />
-          <Route path="/note/:id" Component={NotePage} />
           <Route path="/login" Component={LoginPage} name="login" />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/note/:id" Component={NotePage} />
+          </Route>
         </Routes>
       </Router>
     </>
