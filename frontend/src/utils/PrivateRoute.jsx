@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, Navigate } from "react-router";
+import { Outlet, Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const isAuthenticated = false;
@@ -9,7 +9,11 @@ const PrivateRoute = ({ children, ...rest }) => {
   }
 
   if (!isAuthenticated) {
-    return <div>Not authenticated</div>;
+    return (
+      <div>
+        <Navigate to="login" />
+      </div>
+    );
   }
 };
 
