@@ -2,6 +2,9 @@ frontend/node_modules/.cache/
 tutorial/quickstart/__pycache__/
 tutorial/quickstart/migrations/__pycache__/
 tutorial/__pycache__/
+tutorial/tutorial/__pycache__/
+__pycache__/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -58,3 +61,4 @@ tutorial/tutorial/__pycache__/__init__.cpython-310.pyc
 tutorial/tutorial/__pycache__/settings.cpython-310.pyc
 tutorial/tutorial/__pycache__/urls.cpython-310.pyc
 tutorial/tutorial/__pycache__/wsgi.cpython-310.pyc
+tutorial/tutorial/__pycache__/__init__.cpython-310.pyc
