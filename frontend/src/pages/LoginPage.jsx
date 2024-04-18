@@ -1,8 +1,12 @@
 import React from "react";
+import { useContext } from "react";
+import { TheContext } from "../context/MyContext";
 
 const LoginPage = () => {
+  const somecontext = useContext(TheContext);
   return (
     <>
+      <p>login page context {somecontext}</p>
       <form>
         <input
           type="text"

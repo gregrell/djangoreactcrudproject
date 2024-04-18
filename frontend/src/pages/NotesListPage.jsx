@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import ListItem from "../components/ListItem";
 import NotePage from "./NotePage";
+import { TheContext } from "../context/MyContext";
 
 const NotesListPage = () => {
   const [notes, setNotes] = useState([]);
@@ -22,6 +23,7 @@ const NotesListPage = () => {
     navigate("note/new");
   };
 
+  const somecontext = useContext(TheContext);
   return (
     <div>
       <button onClick={handleNewNote}>New</button>
@@ -32,6 +34,7 @@ const NotesListPage = () => {
           </Link>
         ))}
       </div>
+      <p>note list page context {somecontext}</p>
     </div>
   );
 };
