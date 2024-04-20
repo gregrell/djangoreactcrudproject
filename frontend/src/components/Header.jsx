@@ -7,11 +7,12 @@ import { useAuthContext } from "../context/AuthContext";
 const Header = () => {
   const somecontext = useContext(TheContext);
   const authcontext = useAuthContext();
+  const { user } = authcontext;
   return (
     <>
       <p>
         user: Greg, password:3686 header context {somecontext} <br />{" "}
-        authcontext: {authcontext.name}
+        authcontext: user ID: {user && user.user_id}
       </p>
       <Link to="/">notes</Link>
       <span>|</span>

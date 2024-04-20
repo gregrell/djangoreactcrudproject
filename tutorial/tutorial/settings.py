@@ -173,4 +173,11 @@ JWT_AUTH = {
 
 }
 
+
+SIMPLE_JWT = {
+  # It will work instead of the default serializer(TokenObtainPairSerializer).
+  "TOKEN_OBTAIN_SERIALIZER": "quickstart.serializers.MyTokenObtainPairSerializer",
+  # ...
+}
+
 CORS_ALLOW_ALL_ORIGINS = True

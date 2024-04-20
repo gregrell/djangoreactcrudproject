@@ -1,11 +1,9 @@
 import React from "react";
 import { useContext, createContext, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const authcontextdata = createContext(null);
 
-export function useAuthContext() {
-  return useContext(authcontextdata);
-}
 const AuthContext = ({ children, ...rest }) => {
   let [user, setUser] = useState();
   let [auth, setAuth] = useState();
@@ -26,13 +24,20 @@ const AuthContext = ({ children, ...rest }) => {
       body: JSON.stringify(user),
     });
 
-    const activity = await response.json();
-    console.log(activity);
+    const data = await response.json();
+    if (response.status !== 200) {
+      console.log(response.statusText);
+    }
+    if (response.status === 200) {
+      setAuth(data);
+      setUser(jwtDecode(data.access));
+      console.log(jwtDecode(data.access));
+    }
   }
 
   let authcontextvalue = {
-    name: "greg",
     loginUser,
+    user: user,
   };
 
   return (
@@ -45,3 +50,7 @@ const AuthContext = ({ children, ...rest }) => {
 };
 
 export default AuthContext;
+
+export function useAuthContext() {
+  return useContext(authcontextdata);
+}
