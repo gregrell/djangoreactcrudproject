@@ -7,9 +7,12 @@ const LogoutPage = () => {
   const authcontext = useAuthContext();
   const navigate = useNavigate();
 
-  authcontext.logoutUser();
-  navigate("/");
-  return <div>LogoutPage</div>;
+  React.useEffect(() => {
+    authcontext.logoutUser();
+    navigate("/");
+  }, []);
+
+  return <div>Logout Page</div>;
 };
 
 export default LogoutPage;
