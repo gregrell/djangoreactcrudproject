@@ -54,10 +54,21 @@ const AuthContext = ({ children, ...rest }) => {
     navigate("/");
   }
 
+  function isAuth() {
+    return user && user;
+  }
+
+  function authHeader() {
+    return `Bearer ${auth.access}`;
+  }
+
   let authcontextvalue = {
     loginUser,
     logoutUser,
     user: user,
+    auth: auth,
+    isAuth,
+    authHeader,
   };
 
   return (

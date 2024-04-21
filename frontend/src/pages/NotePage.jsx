@@ -1,12 +1,15 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuthContext } from "../context/AuthContext";
 
 const NotePage = ({ params }) => {
   const [note, setNote] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const [IsNew, setIsNew] = useState(false);
+
+  const authcontext = useAuthContext();
 
   useEffect(() => {
     if (id === "new") {
@@ -18,7 +21,14 @@ const NotePage = ({ params }) => {
   }, [id]);
 
   let getNote = async () => {
-    let response = await fetch(`/api/notes/${id}`);
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
+    };
+    let response = await fetch(`/api/notes/${id}`, requestOptions);
     let data = await response.json();
     setNote(data);
   };
@@ -31,7 +41,10 @@ const NotePage = ({ params }) => {
   let updateNote = async () => {
     const requestOptions = {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
       body: JSON.stringify(note),
     };
 
@@ -41,7 +54,10 @@ const NotePage = ({ params }) => {
   let createNote = async () => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
       body: JSON.stringify(note),
     };
 
@@ -51,7 +67,10 @@ const NotePage = ({ params }) => {
   let deleteNote = async () => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
       body: JSON.stringify(note),
     };
 
