@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext, createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { jwtEncode } from "jwt-encode";
 import { useNavigate } from "react-router-dom";
 
 const authcontextdata = createContext(null);
@@ -16,6 +17,8 @@ const AuthContext = ({ children, ...rest }) => {
   let [auth, setAuth] = useState(() =>
     JSON.parse(localStorage.getItem("auth"))
   );
+
+  const [loaded, setLoaded] = useState(false);
 
   async function loginUser(username, password) {
     //let server1 = "https://www.boredapi.com/api/activity";
@@ -46,6 +49,34 @@ const AuthContext = ({ children, ...rest }) => {
     }
   }
 
+  async function refreshToken() {
+    let server2 = "http://localhost:8000/api/token/refresh/";
+
+    let response = await fetch(server2, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      withCredentials: true,
+      body: JSON.stringify(auth),
+    });
+
+    const data = await response.json();
+    if (response.status !== 200) {
+      logoutUser();
+    }
+    if (response.status === 200) {
+      const newtokens = {
+        refresh: auth.refresh,
+        access: data.access,
+      };
+      setAuth(newtokens);
+      setUser(jwtDecode(data.access));
+      localStorage.setItem("auth", JSON.stringify(newtokens));
+      localStorage.setItem("user", JSON.stringify(data.access));
+    }
+  }
+
   function logoutUser() {
     setAuth(null);
     setUser(null);
@@ -61,6 +92,25 @@ const AuthContext = ({ children, ...rest }) => {
   function authHeader() {
     return `Bearer ${auth.access}`;
   }
+
+  //Refresh token poll
+
+  React.useEffect(() => {
+    let interval = setInterval(() => {
+      if (user) {
+        refreshToken();
+      }
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [user]);
+
+  //on mount
+  React.useEffect(() => {
+    if (user) {
+      refreshToken();
+    }
+    setLoaded(true);
+  }, []);
 
   let authcontextvalue = {
     loginUser,
