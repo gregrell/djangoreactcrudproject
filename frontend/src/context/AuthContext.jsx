@@ -1,15 +1,24 @@
 import React from "react";
 import { useContext, createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const authcontextdata = createContext(null);
 
 const AuthContext = ({ children, ...rest }) => {
-  let [user, setUser] = useState();
-  let [auth, setAuth] = useState();
+  let navigate = useNavigate();
+
+  let [user, setUser] = useState(() =>
+    localStorage.getItem("user")
+      ? jwtDecode(JSON.parse(localStorage.getItem("user")))
+      : null
+  );
+  let [auth, setAuth] = useState(() =>
+    JSON.parse(localStorage.getItem("auth"))
+  );
 
   async function loginUser(username, password) {
-    let server1 = "https://www.boredapi.com/api/activity";
+    //let server1 = "https://www.boredapi.com/api/activity";
     let server2 = "http://localhost:8000/api/token/";
 
     const user = { username: username, password: password };
@@ -31,12 +40,23 @@ const AuthContext = ({ children, ...rest }) => {
     if (response.status === 200) {
       setAuth(data);
       setUser(jwtDecode(data.access));
-      console.log(jwtDecode(data.access));
+      localStorage.setItem("auth", JSON.stringify(data));
+      localStorage.setItem("user", JSON.stringify(data.access));
+      navigate("/");
     }
+  }
+
+  function logoutUser() {
+    setAuth(null);
+    setUser(null);
+    localStorage.removeItem("auth");
+    localStorage.removeItem("user");
+    navigate("/");
   }
 
   let authcontextvalue = {
     loginUser,
+    logoutUser,
     user: user,
   };
 

@@ -13,7 +13,7 @@ import NotePage from "./pages/NotePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import PrivateRoute from "./utils/PrivateRoute.jsx";
 import MyContext from "./context/MyContext.jsx";
-
+import LogoutPage from "./pages/LogoutPage.jsx";
 //<Route path="/note/:id" Component={NotePage} />
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
           <Routes>
             <Route path="/" exact Component={NotesListPage} name="notes" />
             <Route path="/login" Component={LoginPage} name="login" />
+            <Route path="/logout" Component={LogoutPage} name="logout" />
 
             <Route element={<PrivateRoute />}>
               <Route path="/note/:id" Component={NotePage} />

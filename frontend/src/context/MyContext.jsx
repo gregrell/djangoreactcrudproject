@@ -9,7 +9,7 @@ const MyContext = ({ children }) => {
   return (
     <div>
       <h1>PROVIDER!</h1>
-      <TheContext.Provider value={"Jesus Fking Christ"}>
+      <TheContext.Provider value={"My Context String"}>
         <AuthContext>{children}</AuthContext>
       </TheContext.Provider>
     </div>
