@@ -21,7 +21,6 @@ const AuthContext = ({ children, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
 
   async function loginUser(username, password) {
-    //let server1 = "https://www.boredapi.com/api/activity";
     let server2 = "http://localhost:8000/api/token/";
 
     const user = { username: username, password: password };
@@ -42,7 +41,7 @@ const AuthContext = ({ children, ...rest }) => {
     }
     if (response.status === 200) {
       setAuth(data);
-      setUser(jwtDecode(data.access));
+      setUser(jwtDecode(data?.access));
       localStorage.setItem("auth", JSON.stringify(data));
       localStorage.setItem("user", JSON.stringify(data.access));
       navigate("/");
@@ -75,6 +74,7 @@ const AuthContext = ({ children, ...rest }) => {
       localStorage.setItem("auth", JSON.stringify(newtokens));
       localStorage.setItem("user", JSON.stringify(data.access));
     }
+    setLoaded(true);
   }
 
   function logoutUser() {
@@ -96,21 +96,17 @@ const AuthContext = ({ children, ...rest }) => {
   //Refresh token poll
 
   React.useEffect(() => {
+    if (!loaded) {
+      refreshToken();
+    }
+
     let interval = setInterval(() => {
       if (user) {
         refreshToken();
       }
     }, 60000);
     return () => clearInterval(interval);
-  }, [user]);
-
-  //on mount
-  React.useEffect(() => {
-    if (user) {
-      refreshToken();
-    }
-    setLoaded(true);
-  }, []);
+  }, [user, loaded]);
 
   let authcontextvalue = {
     loginUser,
