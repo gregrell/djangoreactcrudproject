@@ -96,7 +96,7 @@ const AuthContext = ({ children, ...rest }) => {
   //Refresh token poll
 
   React.useEffect(() => {
-    if (!loaded) {
+    if (!loaded && user) {
       refreshToken();
     }
 
