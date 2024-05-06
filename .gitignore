@@ -4,7 +4,7 @@ tutorial/quickstart/migrations/__pycache__/
 tutorial/__pycache__/
 tutorial/tutorial/__pycache__/
 __pycache__/
-
+node_modules
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
