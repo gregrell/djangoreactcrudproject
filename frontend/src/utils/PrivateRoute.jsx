@@ -16,7 +16,15 @@ const PrivateRoute = ({ children, ...rest }) => {
   const isAuthenticated = authcontext.isAuth();
 
   if (isAuthenticated) {
-    return <Outlet />;
+    return (
+      <div>
+        <h3>
+          User is authenticated - Outlet: The default home / position goes to
+          'NotesListPage.jsx' <br />
+        </h3>
+        <Outlet />
+      </div>
+    );
   }
 
   if (!isAuthenticated) {

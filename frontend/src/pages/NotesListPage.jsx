@@ -26,6 +26,7 @@ const NotesListPage = () => {
   const somecontext = useContext(TheContext);
   return (
     <div>
+      <h3>begin 'NotesListPage.jsx</h3>
       <button onClick={handleNewNote}>New</button>
       <div className="notes-list">
         {notes.map((note) => (
@@ -35,6 +36,7 @@ const NotesListPage = () => {
         ))}
       </div>
       <p>note list page context {somecontext}</p>
+      <h3>End 'NotesListPage.jsx'</h3>
     </div>
   );
 };

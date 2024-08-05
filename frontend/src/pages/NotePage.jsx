@@ -95,10 +95,12 @@ const NotePage = ({ params }) => {
 
   return (
     <>
+      <h3>Begin note page 'NotePage.jsx'</h3>
       <button onClick={handleBackButtonClick}> back </button>
       {!IsNew && <button onClick={handleDeleteButtonClick}> delete </button>}
       Body of {id}:
       <textarea defaultValue={note?.body} onChange={handleinputchange} />
+      <h3>End note page 'NotePage.jsx'</h3>
     </>
   );
 };

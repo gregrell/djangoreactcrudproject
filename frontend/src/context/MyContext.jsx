@@ -18,10 +18,14 @@ export const TheContext = createContext(null);
 const MyContext = ({ children }) => {
   return (
     <div>
-      <h1>PROVIDER!</h1>
+      <h3>
+        This is the start of context provider. context provider as
+        'MyContext.jsx'
+      </h3>
       <TheContext.Provider value={"My Context String"}>
         <AuthContext>{children}</AuthContext>
       </TheContext.Provider>
+      <h3>end context provider 'NyContext.jsx'</h3>
     </div>
   );
 };
