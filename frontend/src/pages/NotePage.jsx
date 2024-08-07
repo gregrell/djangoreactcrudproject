@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
+import { myTest2, useCreateNote, usePrintFuck } from "../utils/api";
 
 const NotePage = ({ params }) => {
   const [note, setNote] = useState(null);
@@ -10,6 +11,10 @@ const NotePage = ({ params }) => {
   const [IsNew, setIsNew] = useState(false);
 
   const authcontext = useAuthContext();
+
+  //experimental custom hook:
+  const customCreateNote = useCreateNote();
+  const customPrintFuck = usePrintFuck();
 
   useEffect(() => {
     if (id === "new") {
@@ -30,7 +35,7 @@ const NotePage = ({ params }) => {
     };
     let response = await fetch(`/api/notes/${id}`, requestOptions);
     let data = await response.json();
-    setNote(data);
+    setNote(data, myTest2(data.body)); //Setstate and callback. callback is called when setNote has been set.
   };
 
   const handleinputchange = (e) => {
@@ -81,7 +86,9 @@ const NotePage = ({ params }) => {
       updateNote();
     }
     if (IsNew && note?.body) {
-      createNote();
+      createNote(); //THIS IS COMMENTED OUT FOR TESTING CUSTOM HOOKS
+      //customCreateNote(note);
+      customPrintFuck(note);
     }
     navigate(-1);
   };
