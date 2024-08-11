@@ -34,3 +34,18 @@ export function usePrintFuck() {
   }
   return printFuck;
 }
+
+export function useGetNotes() {
+  const [notes, setNotes] = useState();
+  let getNotes = async () => {
+    let response = await fetch("/api/notes/");
+    let data = await response.json();
+    setNotes(data);
+  };
+
+  useEffect(() => {
+    getNotes();
+  }, []);
+
+  return notes;
+}
