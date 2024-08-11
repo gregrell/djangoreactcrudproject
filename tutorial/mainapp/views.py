@@ -26,8 +26,9 @@ class GroupViewSet(viewsets.ModelViewSet):
 @permission_classes([AllowAny])
 def getNotes(request):
     notes = Note.objects.all().order_by("-updated").values()
-    serializr = NoteSerializer(notes, many=True)
-    return Response(serializr.data)
+    serializer = NoteSerializer(notes, many=True)
+
+    return Response(serializer.data)
 
 
 @api_view(["GET"])
@@ -49,7 +50,7 @@ def updateNote(request, pk):
 @api_view(["POST"])
 def createNote(request):
     data = request.data
-    obj = Note.objects.create(body=data["body"])
+    obj = Note.objects.create(body=data["body"], author=request.user)
     serializer = NoteSerializer(obj, many=False)
     return Response(serializer.data)
 

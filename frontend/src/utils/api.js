@@ -27,7 +27,9 @@ export function useGetNotes() {
   let getAxiosNotes = () => {
     axios
       .get("/api/notes/")
-      .then((data) => setNotes(data.data))
+      .then((data) => {
+        setNotes(data.data);
+      })
       .catch((error) => console.log(error));
   };
 

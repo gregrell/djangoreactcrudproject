@@ -24,9 +24,12 @@ const NotesListPage = () => {
       <div className="notes-list">
         {notes &&
           notes.map((note) => (
-            <Link to={`note/${note.id}`} key={note.id}>
-              <ListItem note={note} key={note.id} />
-            </Link>
+            <div key={note.id}>
+              <Link to={`note/${note.id}`}>
+                <ListItem note={note} />
+              </Link>
+              <p>by: {note.username}</p>
+            </div>
           ))}
       </div>
       <p>note list page context {somecontext}</p>
