@@ -35,17 +35,19 @@ export function usePrintFuck() {
   return printFuck;
 }
 
+//* This custom hook is used to get all the notes in the database. It keeps notes as internal state *//
 export function useGetNotes() {
   const [notes, setNotes] = useState();
+
+  useEffect(() => {
+    getNotes();
+  }, []);
+
   let getNotes = async () => {
     let response = await fetch("/api/notes/");
     let data = await response.json();
     setNotes(data);
   };
-
-  useEffect(() => {
-    getNotes();
-  }, []);
 
   return notes;
 }

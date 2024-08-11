@@ -10,7 +10,6 @@ import { useGetNotes } from "../utils/api";
 
 const NotesListPage = () => {
   const navigate = useNavigate();
-
   const notes = useGetNotes();
 
   const handleNewNote = () => {
