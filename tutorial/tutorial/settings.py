@@ -1,4 +1,3 @@
-
 """
 Django settings for tutorial project.
 
@@ -15,14 +14,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 ##################################################
 import django
 from django.utils.encoding import smart_str
+
 django.utils.encoding.smart_text = smart_str
 
 from django.utils.translation import gettext
+
 django.utils.translation.ugettext = gettext
 ##################################################
-
-
-
 
 
 from pathlib import Path
@@ -52,7 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "quickstart.apps.QuickstartConfig",
+    "mainapp.apps.MainappConfig",
     "rest_framework",
     "corsheaders",
 ]
@@ -107,15 +105,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    #{
+    # {
     #    "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    #},
-    #{
+    # },
+    # {
     #    "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    #},
-    #{
+    # },
+    # {
     #    "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    #},
+    # },
 ]
 
 
@@ -146,38 +144,32 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
-    #"DEFAULT_AUTHENTICATION_CLASSES": [],
-    #"DEFAULT_PERMISSION_CLASSES": [],
-     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-     
+    # "DEFAULT_AUTHENTICATION_CLASSES": [],
+    # "DEFAULT_PERMISSION_CLASSES": [],
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
 
 import datetime
+
 JWT_AUTH = {
-   
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
-    'JWT_AUTH_COOKIE': None,
-    'JWT_BLACKLIST_ENABLED': True,
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False,
-
-
+    "JWT_ALLOW_REFRESH": True,
+    "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7),
+    "JWT_AUTH_HEADER_PREFIX": "JWT",
+    "JWT_AUTH_COOKIE": None,
+    "JWT_BLACKLIST_ENABLED": True,
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
 }
 
 
 SIMPLE_JWT = {
-  # It will work instead of the default serializer(TokenObtainPairSerializer).
-  "TOKEN_OBTAIN_SERIALIZER": "quickstart.serializers.MyTokenObtainPairSerializer",
-  # ...
+    # It will work instead of the default serializer(TokenObtainPairSerializer).
+    "TOKEN_OBTAIN_SERIALIZER": "mainapp.serializers.MyTokenObtainPairSerializer",
+    # ...
 }
 
 CORS_ALLOW_ALL_ORIGINS = True

@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .models import Note
 
-from quickstart.serializers import GroupSerializer, UserSerializer, NoteSerializer
+from mainapp.serializers import GroupSerializer, UserSerializer, NoteSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -25,7 +25,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def getNotes(request):
-    notes = Note.objects.all().order_by('-updated').values()
+    notes = Note.objects.all().order_by("-updated").values()
     serializr = NoteSerializer(notes, many=True)
     return Response(serializr.data)
 
@@ -45,12 +45,11 @@ def updateNote(request, pk):
     obj.save()
     return Response(status=202)
 
+
 @api_view(["POST"])
 def createNote(request):
     data = request.data
-    obj = Note.objects.create(
-        body=data['body']
-    )
+    obj = Note.objects.create(body=data["body"])
     serializer = NoteSerializer(obj, many=False)
     return Response(serializer.data)
 
