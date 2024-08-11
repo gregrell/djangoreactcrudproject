@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { useCreateNote, usePrintFuck } from "../utils/api";
 
+//experimental custom hook:
+import { useNoteCrud } from "../utils/api";
+
 const NotePage = ({ params }) => {
   const [note, setNote] = useState(null);
   const { id } = useParams();
@@ -11,6 +14,8 @@ const NotePage = ({ params }) => {
   const [IsNew, setIsNew] = useState(false);
 
   const authcontext = useAuthContext();
+
+  const [createNote] = useNoteCrud();
 
   useEffect(() => {
     if (id === "new") {
@@ -52,19 +57,6 @@ const NotePage = ({ params }) => {
     const response = await fetch(`/api/notes/${id}/update`, requestOptions);
   };
 
-  let createNote = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${authcontext.authHeader()}`,
-      },
-      body: JSON.stringify(note),
-    };
-
-    const response = await fetch(`/api/notes/create/`, requestOptions);
-  };
-
   let deleteNote = async () => {
     const requestOptions = {
       method: "POST",
@@ -82,7 +74,7 @@ const NotePage = ({ params }) => {
       updateNote();
     }
     if (IsNew && note?.body) {
-      createNote();
+      createNote(note, authcontext);
     }
     navigate(-1);
   };

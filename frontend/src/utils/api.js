@@ -3,6 +3,9 @@ import { React, useState, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
 //* This custom hook is used to get all the notes in the database. It keeps notes as internal state *//
+//* Custom hooks only share logic across components, the data will be different between each instance call.
+//* context can share data across all components
+
 export function useGetNotes() {
   const [notes, setNotes] = useState();
 
@@ -17,4 +20,21 @@ export function useGetNotes() {
   };
 
   return notes;
+}
+
+export function useNoteCrud() {
+  let customCreateNote = async (note, authcontext) => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
+      body: JSON.stringify(note),
+    };
+
+    const response = await fetch(`/api/notes/create/`, requestOptions);
+  };
+
+  return [customCreateNote];
 }
