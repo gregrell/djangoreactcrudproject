@@ -105,7 +105,13 @@ export function useNoteCrud() {
       body: JSON.stringify(note),
     };
 
-    const response = await fetch(`/api/notes/${id}/update`, requestOptions);
+    //const response = await fetch(`/api/notes/${id}/update`, requestOptions); // turned off in favor of axios below. Left here as example.
+    axios
+      .put(`/api/notes/${id}/update`, requestOptions.body, {
+        headers: requestOptions.headers,
+      })
+      .then()
+      .catch((error) => console.log(error));
   };
 
   return [note, setNote, getNote, createNote, deleteNote, updateNote];
