@@ -28,7 +28,7 @@ const NotePage = ({ params }) => {
 
   const handleinputchange = (e) => {
     const textareavalue = e.target.value;
-    setNote({ body: textareavalue });
+    setNote({ ...note, body: textareavalue });
   };
 
   const handleBackButtonClick = () => {

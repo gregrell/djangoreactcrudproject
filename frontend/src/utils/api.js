@@ -1,27 +1,40 @@
 //need to change this to a custom react hook in order to use authcontext
 import { React, useState, useEffect } from "react";
-import { useAuthContext } from "../context/AuthContext";
+
+//Axios sandbox
+import axios from "axios";
 
 //* This custom hook is used to get all the notes in the database. It keeps notes as internal state *//
 //* Custom hooks only share logic across components, the data will be different between each instance call.
 //* context can share data across all components
 
+// Get all notes hook
 export function useGetNotes() {
   const [notes, setNotes] = useState(null);
 
   useEffect(() => {
-    getNotes();
+    //getNotes(); //This is refactored to use axios
+    getAxiosNotes();
   }, []);
 
+  //The getNotes() is not called because it is replaced by getAxiosNotes(). It is here as reference if you want to use async await
   let getNotes = async () => {
     let response = await fetch("/api/notes/");
     let data = await response.json();
     setNotes(data);
   };
 
+  let getAxiosNotes = () => {
+    axios
+      .get("/api/notes/")
+      .then((data) => setNotes(data.data))
+      .catch((error) => console.log(error));
+  };
+
   return notes;
 }
 
+// Individual CRUD operations on single note. Each of these functions require a note ID and authcontext
 export function useNoteCrud() {
   const [note, setNote] = useState(null);
 
@@ -33,9 +46,14 @@ export function useNoteCrud() {
         Authorization: `${authcontext.authHeader()}`,
       },
     };
-    let response = await fetch(`/api/notes/${id}`, requestOptions);
-    let data = await response.json();
-    setNote(data);
+    //let response = await fetch(`/api/notes/${id}`, requestOptions); //turned off in favor of axios call below. Left here as example
+    //let data = await response.json(); //turned off in favor of axios call below. Left here as example
+    //setNote(data); this is turned off
+
+    axios
+      .get(`/api/notes/${id}`, { headers: requestOptions.headers })
+      .then((data) => setNote(data.data))
+      .catch((error) => console.log(error));
   };
 
   let createNote = async (note, authcontext) => {
@@ -48,7 +66,14 @@ export function useNoteCrud() {
       body: JSON.stringify(note),
     };
 
-    const response = await fetch(`/api/notes/create/`, requestOptions);
+    //const response = await fetch(`/api/notes/create/`, requestOptions); // turned off in favor of axios below. Left here as example.
+
+    axios
+      .post(`/api/notes/create/`, requestOptions.body, {
+        headers: requestOptions.headers,
+      })
+      .then()
+      .catch((error) => console.log(error));
   };
 
   let deleteNote = async (id, authcontext) => {
@@ -58,9 +83,16 @@ export function useNoteCrud() {
         "Content-Type": "application/json",
         Authorization: `${authcontext.authHeader()}`,
       },
+      body: "",
     };
 
-    const response = await fetch(`/api/notes/${id}/delete`, requestOptions);
+    //const response = await fetch(`/api/notes/${id}/delete`, requestOptions);// turned off in favor of axios below. Left here as example
+    axios
+      .post(`/api/notes/${id}/delete`, requestOptions.body, {
+        headers: requestOptions.headers,
+      })
+      .then()
+      .catch((error) => console.log(error));
   };
 
   let updateNote = async (id, authcontext) => {
