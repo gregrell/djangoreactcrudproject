@@ -8,36 +8,23 @@ import { useCreateNote, usePrintFuck } from "../utils/api";
 import { useNoteCrud } from "../utils/api";
 
 const NotePage = ({ params }) => {
-  const [note, setNote] = useState(null);
+  const [oldnote, oldsetNote] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const [IsNew, setIsNew] = useState(false);
 
   const authcontext = useAuthContext();
 
-  const [createNote] = useNoteCrud();
+  const [note, setNote, getNote, createNote, deleteNote] = useNoteCrud();
 
   useEffect(() => {
     if (id === "new") {
       setIsNew(true);
     }
     if (id !== "new") {
-      getNote();
+      getNote(id, authcontext);
     }
   }, [id]);
-
-  let getNote = async () => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${authcontext.authHeader()}`,
-      },
-    };
-    let response = await fetch(`/api/notes/${id}`, requestOptions);
-    let data = await response.json();
-    setNote(data); //Setstate and callback. callback is called when setNote has been set.
-  };
 
   const handleinputchange = (e) => {
     const textareavalue = e.target.value;
@@ -57,18 +44,6 @@ const NotePage = ({ params }) => {
     const response = await fetch(`/api/notes/${id}/update`, requestOptions);
   };
 
-  let deleteNote = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${authcontext.authHeader()}`,
-      },
-      body: JSON.stringify(note),
-    };
-
-    const response = await fetch(`/api/notes/${id}/delete`, requestOptions);
-  };
   const handleBackButtonClick = () => {
     if (!IsNew) {
       updateNote();
@@ -81,7 +56,7 @@ const NotePage = ({ params }) => {
 
   const handleDeleteButtonClick = () => {
     if (!IsNew) {
-      deleteNote();
+      deleteNote(id, authcontext);
     }
     navigate(-1);
   };

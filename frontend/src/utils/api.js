@@ -7,7 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 //* context can share data across all components
 
 export function useGetNotes() {
-  const [notes, setNotes] = useState();
+  const [notes, setNotes] = useState(null);
 
   useEffect(() => {
     getNotes();
@@ -23,7 +23,22 @@ export function useGetNotes() {
 }
 
 export function useNoteCrud() {
-  let customCreateNote = async (note, authcontext) => {
+  const [note, setNote] = useState(null);
+
+  let getNote = async (id, authcontext) => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
+    };
+    let response = await fetch(`/api/notes/${id}`, requestOptions);
+    let data = await response.json();
+    setNote(data);
+  };
+
+  let createNote = async (note, authcontext) => {
     const requestOptions = {
       method: "POST",
       headers: {
@@ -36,5 +51,17 @@ export function useNoteCrud() {
     const response = await fetch(`/api/notes/create/`, requestOptions);
   };
 
-  return [customCreateNote];
+  let deleteNote = async (id, authcontext) => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
+    };
+
+    const response = await fetch(`/api/notes/${id}/delete`, requestOptions);
+  };
+
+  return [note, setNote, getNote, createNote, deleteNote];
 }
