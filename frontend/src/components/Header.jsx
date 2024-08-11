@@ -14,16 +14,19 @@ const Header = () => {
   return (
     <>
       <p>
+        This is the Header Component 'Header.jsx' <br />
         Super user: Greg, password:3686 header context {somecontext} <br />{" "}
         Logged in: <br />
         authcontext: user ID: {user && user.user_id} <br />
         user name: {user && user.username}
+        <br />
       </p>
       <Link to="/">notes</Link>
       <span>|</span>
       {!user && <Link to="login">login</Link>}
       {user && <Link to="logout">logout</Link>}
       <br />
+      End of Header Component
       <br />
     </>
   );
