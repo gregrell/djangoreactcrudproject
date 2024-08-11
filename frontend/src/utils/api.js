@@ -63,5 +63,18 @@ export function useNoteCrud() {
     const response = await fetch(`/api/notes/${id}/delete`, requestOptions);
   };
 
-  return [note, setNote, getNote, createNote, deleteNote];
+  let updateNote = async (id, authcontext) => {
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
+      body: JSON.stringify(note),
+    };
+
+    const response = await fetch(`/api/notes/${id}/update`, requestOptions);
+  };
+
+  return [note, setNote, getNote, createNote, deleteNote, updateNote];
 }

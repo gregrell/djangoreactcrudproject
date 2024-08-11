@@ -8,14 +8,14 @@ import { useCreateNote, usePrintFuck } from "../utils/api";
 import { useNoteCrud } from "../utils/api";
 
 const NotePage = ({ params }) => {
-  const [oldnote, oldsetNote] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const [IsNew, setIsNew] = useState(false);
 
   const authcontext = useAuthContext();
 
-  const [note, setNote, getNote, createNote, deleteNote] = useNoteCrud();
+  const [note, setNote, getNote, createNote, deleteNote, updateNote] =
+    useNoteCrud();
 
   useEffect(() => {
     if (id === "new") {
@@ -31,22 +31,9 @@ const NotePage = ({ params }) => {
     setNote({ body: textareavalue });
   };
 
-  let updateNote = async () => {
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${authcontext.authHeader()}`,
-      },
-      body: JSON.stringify(note),
-    };
-
-    const response = await fetch(`/api/notes/${id}/update`, requestOptions);
-  };
-
   const handleBackButtonClick = () => {
     if (!IsNew) {
-      updateNote();
+      updateNote(id, authcontext);
     }
     if (IsNew && note?.body) {
       createNote(note, authcontext);
