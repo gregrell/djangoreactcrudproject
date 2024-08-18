@@ -8,7 +8,8 @@ from .models import Note, UserInfo
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ["url", "username", "email", "groups"]
+        #fields = ["url", "username", "email", "groups"]
+        fields = "__all__"
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -42,8 +43,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token["username"] = user.username
+        token["email"] = user.email
         # ...
-
         return token
 
 class UserInfoSerializer(serializers.ModelSerializer):

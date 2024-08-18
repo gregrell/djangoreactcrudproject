@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { useUserInfoCrud } from "../utils/api";
 
@@ -13,6 +12,8 @@ const UserSettings = ({ params }) => {
       <br />
       <div>
         <p>User Name: {user.username}</p>
+        <br />
+        <p>Email: {user.email}</p>
         <br />
         <p>First Name: {userInfo?.first_name}</p>
         <br />
