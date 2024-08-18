@@ -1,11 +1,6 @@
 import "./App.css";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  BrowserRouter,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header.jsx";
 import NotesListPage from "./pages/NotesListPage.jsx";
@@ -15,6 +10,7 @@ import PrivateRoute from "./utils/PrivateRoute.jsx";
 import MyContext from "./context/MyContext.jsx";
 import LogoutPage from "./pages/LogoutPage.jsx";
 import UserSettings from "./pages/UserSettings.jsx";
+import SignUpPage from "./pages/SignUpPage.jsx";
 //<Route path="/note/:id" Component={NotePage} />
 
 /* The router is set up to provide context (MyContext) to all children including Route components
@@ -34,6 +30,7 @@ function App() {
             <Route path="/" exact Component={NotesListPage} name="notes" />
             <Route path="/login" Component={LoginPage} name="login" />
             <Route path="/logout" Component={LogoutPage} name="logout" />
+            <Route path="/signup" Component={SignUpPage} name="signup" />
 
             <Route element={<PrivateRoute />}>
               <Route path="/note/:id" Component={NotePage} />
