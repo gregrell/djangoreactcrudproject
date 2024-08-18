@@ -4,11 +4,13 @@ import { React, useState, useEffect } from "react";
 //Axios sandbox
 import axios from "axios";
 
+// **************** NOTES API *************************** //
+
 //* This custom hook is used to get all the notes in the database. It keeps notes as internal state *//
 //* Custom hooks only share logic across components, the data will be different between each instance call.
 //* context can share data across all components
 
-// Get all notes hook
+//   Get all notes hook
 export function useGetNotes() {
   const [notes, setNotes] = useState(null);
 
@@ -117,4 +119,36 @@ export function useNoteCrud() {
   };
 
   return [note, setNote, getNote, createNote, deleteNote, updateNote];
+}
+
+// *************************** USER API *************************** //
+
+export function useUserInfoCrud(authcontext) {
+  const [firstRun, setFirstRun] = useState(true);
+  const [userInfo, setUserInfo] = useState(null);
+  useEffect(() => {
+    if (firstRun) {
+      getUserInfo(authcontext);
+      setFirstRun(false);
+    }
+  });
+  let getUserInfo = async (authcontext) => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authcontext.authHeader()}`,
+      },
+    };
+
+    axios
+      .get(`/api/userInfo/`, {
+        headers: requestOptions.headers,
+      })
+      .then((data) => {
+        setUserInfo(data.data);
+      })
+      .catch((error) => console.log(error));
+  };
+  return [userInfo];
 }

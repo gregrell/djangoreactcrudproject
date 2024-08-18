@@ -5,9 +5,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-from .models import Note
+from .models import Note, UserInfo
 
-from mainapp.serializers import GroupSerializer, UserSerializer, NoteSerializer
+from mainapp.serializers import GroupSerializer, UserSerializer, NoteSerializer, UserInfoSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -21,7 +21,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
+# ********************* NOTES CRUD ************************** #
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def getNotes(request):
@@ -60,3 +60,17 @@ def deleteNote(request, pk):
     obj = Note.objects.get(id=pk)
     obj.delete()
     return Response(status=202)
+
+# ************************** END NOTES CRUD ********************* #
+
+
+
+# ************************** USER INFO CRUD ********************* #
+@api_view(["GET"])
+def getUserInfo(request):
+    userinfo = UserInfo.objects.get(user=request.user)
+    serializer = UserInfoSerializer(userinfo, many=False)
+    return Response(serializer.data)
+
+
+# ************************* END USER INFO CRUD ****************** #

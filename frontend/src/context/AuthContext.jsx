@@ -1,3 +1,6 @@
+//This AuthContext component is called from the parent MyContext component.
+//The MyContext component will share context globally with the application
+
 import React from "react";
 import { useContext, createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";

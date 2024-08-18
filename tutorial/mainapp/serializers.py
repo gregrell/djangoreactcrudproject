@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import Note
+from .models import Note, UserInfo
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -45,3 +45,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserInfo
+        fields = "__all__"

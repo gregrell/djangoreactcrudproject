@@ -14,6 +14,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import PrivateRoute from "./utils/PrivateRoute.jsx";
 import MyContext from "./context/MyContext.jsx";
 import LogoutPage from "./pages/LogoutPage.jsx";
+import UserSettings from "./pages/UserSettings.jsx";
 //<Route path="/note/:id" Component={NotePage} />
 
 /* The router is set up to provide context (MyContext) to all children including Route components
@@ -36,6 +37,7 @@ function App() {
 
             <Route element={<PrivateRoute />}>
               <Route path="/note/:id" Component={NotePage} />
+              <Route path="/usersettings" Component={UserSettings} />
             </Route>
           </Routes>
         </MyContext>

@@ -25,6 +25,7 @@ const Header = () => {
       <span>|</span>
       {!user && <Link to="login">login</Link>}
       {user && <Link to="logout">logout</Link>}
+      {user && <Link to="usersettings">User Settings</Link>}
       <br />
       End of Header Component
       <br />

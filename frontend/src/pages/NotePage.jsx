@@ -2,7 +2,6 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { useCreateNote, usePrintFuck } from "../utils/api";
 
 //experimental custom hook:
 import { useNoteCrud } from "../utils/api";
