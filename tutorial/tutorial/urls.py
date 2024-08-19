@@ -54,6 +54,7 @@ urlpatterns = [
     path("api/notes/<str:pk>/delete", csrf_exempt(views.deleteNote), name="deletenote"),
     path("api/userInfo/", views.getUserInfo, name="getuserinfo"),
     path("api/user/lookupname/<str:pk>", csrf_exempt(views.getUserByUsername), name="userbyusername"),
+    path("api/user/lookupemail/<str:pk>", csrf_exempt(views.getUserByEmail), name="userbyemail"),
 
 
 ]

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUserLookupAPI } from "../utils/api";
 
 const SignUpPage = () => {
@@ -11,14 +11,47 @@ const SignUpPage = () => {
     password: "",
   });
 
-  const [usernameExists] = useUserLookupAPI(form);
+  //Use effect is called every time the form changes. Will call check complete which
+  //determines if everything is filled in properly.
+  useEffect(() => {
+    checkFormComplete();
+  }, [form]);
 
-  function handleSubmit() {}
+  const [usernameExists, userEmailExists] = useUserLookupAPI(form);
+
+  function handleSubmit() {
+    console.log("submit");
+  }
 
   function handleInputChange(e) {
     setForm((rest) => ({ ...rest, [e.target.name]: e.target.value }));
   }
 
+  function checkFormComplete() {
+    const usernamelengthok = form.username.length > 2;
+    const emailmatch = form.email.match(
+      //email format string, check if the email address is ok, then put result in emailmatch
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+    let emailformatok = false;
+    if (!!emailmatch) {
+      //if email match is not null then the format is ok
+      emailformatok = true;
+    }
+
+    const firstnamelengthok = form.firstname.length > 0;
+    const lastnamelengthok = form.lastname.length > 0;
+    const passwordlengthok = form.password.length > 0;
+    setComplete(
+      usernamelengthok &&
+        emailformatok &&
+        firstnamelengthok &&
+        lastnamelengthok &&
+        passwordlengthok &&
+        !usernameExists &&
+        !userEmailExists
+    );
+  }
   return (
     <>
       <div>Sign Up Page Start</div>
@@ -41,6 +74,8 @@ const SignUpPage = () => {
           onChange={handleInputChange}
           value={form.email || ""}
         />
+        {userEmailExists && <p>Email already exists</p>}
+
         <br />
 
         <input

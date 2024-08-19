@@ -162,6 +162,9 @@ export function useUserLookupAPI(form) {
     if (form.username) {
       lookupUsername(form.username);
     }
+    if (form.email) {
+      lookupEmail(form.email);
+    }
   }, [form]);
 
   let lookupUsername = async (username) => {
@@ -172,6 +175,7 @@ export function useUserLookupAPI(form) {
       })
       .catch((error) => {
         setusernameExists(false);
+        console.log(error);
       });
   };
 
@@ -183,6 +187,7 @@ export function useUserLookupAPI(form) {
       })
       .catch((error) => {
         setuseremailExists(false);
+        console.log(error);
       });
   };
   return [usernameExists, useremailExists];
