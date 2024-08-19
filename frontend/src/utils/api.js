@@ -152,3 +152,26 @@ export function useUserInfoCrud(authcontext) {
   };
   return [userInfo];
 }
+
+// *************************** USER LOOKUP API *************************** //
+export function useUserLookupAPI(form) {
+  const [usernameExists, setusernameExists] = useState(false);
+
+  useEffect(() => {
+    if (form.username) {
+      getUserByUsername(form.username);
+    }
+  }, [form]);
+
+  let getUserByUsername = async (username) => {
+    axios
+      .get(`api/user/lookupname/${username}`)
+      .then((data) => {
+        setusernameExists(data.data.found);
+      })
+      .catch((error) => {
+        setusernameExists(false);
+      });
+  };
+  return [usernameExists];
+}

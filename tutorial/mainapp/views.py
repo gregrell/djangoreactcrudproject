@@ -21,6 +21,27 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+
+# ********************  USER LOOKUP ************************* #
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def getUserByUsername(request,pk):
+    print('username = '+pk)
+    try:
+        user = User.objects.get(username=pk)
+        print('user found')
+        return Response(data={'found':True},status=202)
+
+    except:
+        print('user not found')
+        return Response(data={'found':False},status=202)
+
+
+
+
+# ********************  END USER LOOKUP ********************* #    
+
 # ********************* NOTES CRUD ************************** #
 @api_view(["GET"])
 @permission_classes([AllowAny])

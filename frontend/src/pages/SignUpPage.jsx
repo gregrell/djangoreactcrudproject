@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useUserLookupAPI } from "../utils/api";
 
 const SignUpPage = () => {
   const [complete, setComplete] = useState(false);
@@ -9,12 +10,15 @@ const SignUpPage = () => {
     lastname: "",
     password: "",
   });
+
+  const [usernameExists] = useUserLookupAPI(form);
+
   function handleSubmit() {}
 
   function handleInputChange(e) {
     setForm((rest) => ({ ...rest, [e.target.name]: e.target.value }));
   }
-  console.log(form);
+
   return (
     <>
       <div>Sign Up Page Start</div>
@@ -27,6 +31,7 @@ const SignUpPage = () => {
           onChange={handleInputChange}
           value={form.username || ""}
         />
+        {usernameExists && <p>Username already exists</p>}
         <br />
         <input
           type="email"
