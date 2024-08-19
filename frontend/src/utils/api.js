@@ -156,14 +156,15 @@ export function useUserInfoCrud(authcontext) {
 // *************************** USER LOOKUP API *************************** //
 export function useUserLookupAPI(form) {
   const [usernameExists, setusernameExists] = useState(false);
+  const [useremailExists, setuseremailExists] = useState(false);
 
   useEffect(() => {
     if (form.username) {
-      getUserByUsername(form.username);
+      lookupUsername(form.username);
     }
   }, [form]);
 
-  let getUserByUsername = async (username) => {
+  let lookupUsername = async (username) => {
     axios
       .get(`api/user/lookupname/${username}`)
       .then((data) => {
@@ -173,5 +174,16 @@ export function useUserLookupAPI(form) {
         setusernameExists(false);
       });
   };
-  return [usernameExists];
+
+  let lookupEmail = async (useremail) => {
+    axios
+      .get(`api/user/lookupemail/${useremail}`)
+      .then((data) => {
+        setuseremailExists(data.data.found);
+      })
+      .catch((error) => {
+        setuseremailExists(false);
+      });
+  };
+  return [usernameExists, useremailExists];
 }
