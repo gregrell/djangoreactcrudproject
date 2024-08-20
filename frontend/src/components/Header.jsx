@@ -5,7 +5,7 @@ import { TheContext } from "../context/MyContext";
 import { useAuthContext } from "../context/AuthContext";
 
 const Header = () => {
-  const somecontext = useContext(TheContext);
+  //const somecontext = useContext(TheContext);
   const authcontext = useAuthContext();
   const { user } = authcontext;
 
@@ -15,8 +15,7 @@ const Header = () => {
     <>
       <p>
         This is the Header Component 'Header.jsx' <br />
-        Super user: Greg, password:3686 header context {somecontext} <br />{" "}
-        Logged in: <br />
+        Super user: Greg, password:3686 <br /> Logged in: <br />
         authcontext: user ID: {user && user.user_id} <br />
         user name: {user && user.username}
         <br />

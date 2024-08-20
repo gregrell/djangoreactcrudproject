@@ -167,11 +167,11 @@ export function useNoteCrud() {
   return [note, setNote, getNote, createNote, deleteNote, updateNote];
 }
 
-// *************************** USER Info API *************************** //
+// *************************** Extended USER Info API *************************** //
 
-export function useUserInfoCrud(authcontext) {
+export function useExtendedUserInfoCrud(authcontext) {
   const [firstRun, setFirstRun] = useState(true);
-  const [userInfo, setUserInfo] = useState(null);
+  const [extendedUserInfo, setUserInfo] = useState(null);
   useEffect(() => {
     if (firstRun) {
       getUserInfo(authcontext);
@@ -196,7 +196,7 @@ export function useUserInfoCrud(authcontext) {
       })
       .catch((error) => console.log(error));
   };
-  return [userInfo];
+  return [extendedUserInfo];
 }
 
 // *************************** USER LOOKUP API *************************** //

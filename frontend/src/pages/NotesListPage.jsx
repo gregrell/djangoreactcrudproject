@@ -32,7 +32,6 @@ const NotesListPage = () => {
             </div>
           ))}
       </div>
-      <p>note list page context {somecontext}</p>
       <h3>End 'NotesListPage.jsx'</h3>
     </div>
   );

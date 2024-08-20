@@ -1,11 +1,17 @@
 import React from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { useUserInfoCrud } from "../utils/api";
+import { MyContext, TheContext } from "../context/MyContext";
+import { useExtendedUserInfoCrud } from "../utils/api";
+import { useContext } from "react";
 
 const UserSettings = ({ params }) => {
   const authcontext = useAuthContext();
   const { user } = authcontext;
-  const [userInfo] = useUserInfoCrud(authcontext);
+  const [extendedUserInfo] = useExtendedUserInfoCrud(authcontext);
+  const appSettings = useContext(TheContext);
+
+  appSettings.userState.setUser("fuck");
+
   return (
     <div>
       User Settings Page Start
@@ -15,11 +21,11 @@ const UserSettings = ({ params }) => {
         <br />
         <p>Email: {user.email}</p>
         <br />
-        <p>First Name: {userInfo?.first_name}</p>
+        <p>First Name: {user.first_name}</p>
         <br />
-        <p>Last Name: {userInfo?.last_name}</p>
+        <p>Last Name: {appSettings.userState.user}</p>
         <br />
-        <p>DOB: {userInfo?.dob}</p>
+        <p>DOB: {extendedUserInfo?.dob}</p>
       </div>
       <br />
       User Settings Page End

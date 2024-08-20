@@ -31,7 +31,6 @@ const LoginPage = () => {
 
   return (
     <>
-      <p>login page context {somecontext}</p>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

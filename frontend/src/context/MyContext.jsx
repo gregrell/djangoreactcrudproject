@@ -10,22 +10,28 @@ of this component therefore have access to 2 contexts - MyContext and AuthContex
 
 import React from "react";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import AuthContext from "./AuthContext";
 
 export const TheContext = createContext(null);
 
 const MyContext = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  let appInfo = {
+    userState: { user, setUser },
+  };
+
   return (
     <div>
       <h3>
         This is the start of context provider. context provider as
         'MyContext.jsx'
       </h3>
-      <TheContext.Provider value={"My Context String"}>
+      <TheContext.Provider value={appInfo}>
         <AuthContext>{children}</AuthContext>
       </TheContext.Provider>
-      <h3>end context provider 'NyContext.jsx'</h3>
+      <h3>end context provider 'MyContext.jsx'</h3>
     </div>
   );
 };
