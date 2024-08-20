@@ -10,7 +10,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         #fields = ["url", "username", "email", "groups"]
         fields = "__all__"
-
+        #Need to override the create method so that the data stored to database is validated first. 
+        #When using just the model serializer create, the password would not hash properly. 
+    def create(self, validated_data):
+            return User.objects.create_user(**validated_data)
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

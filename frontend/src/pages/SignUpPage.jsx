@@ -35,12 +35,12 @@ const SignUpPage = () => {
     };
 
     success = await createUser(user);
-    console.log("success " + success);
     if (success) {
       //Navigate("/login");
       navigate("/login");
     } else {
       console.log("could not create user");
+      //todo: error handle user creation gone wrong
     }
   }
 
