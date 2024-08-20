@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useUserLookupAPI } from "../utils/api";
+import { useUserLookupAPI, useUserCRUD } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const [complete, setComplete] = useState(false);
@@ -10,6 +11,7 @@ const SignUpPage = () => {
     lastname: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   //Use effect is called every time the form changes. Will call check complete which
   //determines if everything is filled in properly.
@@ -19,8 +21,27 @@ const SignUpPage = () => {
 
   const [usernameExists, userEmailExists] = useUserLookupAPI(form);
 
-  function handleSubmit() {
-    console.log("submit");
+  const [createUser] = useUserCRUD();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    let success = false;
+    const user = {
+      username: form.username,
+      email: form.email,
+      first_name: form.firstname,
+      last_name: form.lastname,
+      password: form.password,
+    };
+
+    success = await createUser(user);
+    console.log("success " + success);
+    if (success) {
+      //Navigate("/login");
+      navigate("/login");
+    } else {
+      console.log("could not create user");
+    }
   }
 
   function handleInputChange(e) {

@@ -1,8 +1,54 @@
 //need to change this to a custom react hook in order to use authcontext
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 
 //Axios sandbox
 import axios from "axios";
+
+// **************** USER CRUD API *********************** //
+export function useUserCRUD() {
+  let ref = useRef(true);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref = false;
+    } else {
+      //not first call
+    }
+  });
+
+  async function createUser(user) {
+    let success = false;
+    if (user) {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          //Authorization: `${authcontext.authHeader()}`,
+        },
+        body: JSON.stringify(user),
+      };
+
+      await axios
+        .post(`users/`, requestOptions.body, {
+          headers: requestOptions.headers,
+        })
+        .then((data) => {
+          success = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally();
+    } else {
+      console.log("did not create user");
+      //todo: error handling for user creation
+    }
+    return success;
+  }
+  return [createUser];
+}
+
+// **************** END USER CRUD *********************** //
 
 // **************** NOTES API *************************** //
 
@@ -121,7 +167,7 @@ export function useNoteCrud() {
   return [note, setNote, getNote, createNote, deleteNote, updateNote];
 }
 
-// *************************** USER API *************************** //
+// *************************** USER Info API *************************** //
 
 export function useUserInfoCrud(authcontext) {
   const [firstRun, setFirstRun] = useState(true);
