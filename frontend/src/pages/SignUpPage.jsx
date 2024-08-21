@@ -21,7 +21,7 @@ const SignUpPage = () => {
 
   const [usernameExists, userEmailExists] = useUserLookupAPI(form);
 
-  const [createUser] = useUserCRUD();
+  const useUser = useUserCRUD();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -34,7 +34,7 @@ const SignUpPage = () => {
       password: form.password,
     };
 
-    success = await createUser(user);
+    success = await useUser.createUser(user);
     if (success) {
       //Navigate("/login");
       navigate("/login");

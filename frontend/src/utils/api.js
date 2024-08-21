@@ -1,5 +1,6 @@
 //need to change this to a custom react hook in order to use authcontext
 import { React, useState, useEffect, useRef } from "react";
+import { requestBuilder } from "./appUtils.js";
 
 //Axios sandbox
 import axios from "axios";
@@ -7,6 +8,7 @@ import axios from "axios";
 // **************** USER CRUD API *********************** //
 export function useUserCRUD() {
   let ref = useRef(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (ref.current) {
@@ -16,17 +18,34 @@ export function useUserCRUD() {
     }
   });
 
+  async function getUser(
+    id = id,
+    username = username,
+    email = email,
+    authcontext = authcontext
+  ) {
+    const requestOptions = requestBuilder("GET", authcontext, {
+      id: id,
+      username: username,
+      email: email,
+    });
+
+    await axios
+      .get(`users/`, requestOptions.body, {
+        headers: requestOptions.headers,
+      })
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   async function createUser(user) {
     let success = false;
     if (user) {
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          //Authorization: `${authcontext.authHeader()}`,
-        },
-        body: JSON.stringify(user),
-      };
+      const requestOptions = requestBuilder("POST", "", user);
 
       await axios
         .post(`users/`, requestOptions.body, {
@@ -45,7 +64,7 @@ export function useUserCRUD() {
     }
     return success;
   }
-  return [createUser];
+  return { user: user, getUser: getUser, createUser: createUser };
 }
 
 // **************** END USER CRUD *********************** //
@@ -179,13 +198,7 @@ export function useExtendedUserInfoCrud(authcontext) {
     }
   });
   let getUserInfo = async (authcontext) => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${authcontext.authHeader()}`,
-      },
-    };
+    const requestOptions = requestBuilder("GET", authcontext);
 
     axios
       .get(`/api/userInfo/`, {
