@@ -110,12 +110,19 @@ const AuthContext = ({ children, ...rest }) => {
     let interval = setInterval(() => {
       if (user) {
         refreshToken();
-        userCRUD.getUser({ id: user.user_id, authcontext: authcontextvalue });
-        console.log(userCRUD.user);
       }
-    }, 6000);
+    }, 60000);
     return () => clearInterval(interval);
   }, [user, loaded]);
+
+  // Use Effect to set the user in the userCRUD hook when the auth context user changes
+  React.useEffect(() => {
+    if (user) {
+      userCRUD.getUser({ id: user.user_id, authcontext: authcontextvalue });
+    } else {
+      userCRUD.setUser(null);
+    }
+  }, [user]);
 
   //Use effect to set the global user in the app settings context
   React.useEffect(() => {

@@ -29,7 +29,6 @@ export function useUserCRUD() {
       username: username,
       email: email,
     });
-    console.log("get request options: " + requestOptions.body);
 
     await axios
       .get(`users/${id}`, requestOptions.body, {
@@ -66,7 +65,12 @@ export function useUserCRUD() {
     }
     return success;
   }
-  return { user: user, getUser: getUser, createUser: createUser };
+  return {
+    user: user,
+    getUser: getUser,
+    createUser: createUser,
+    setUser: setUser,
+  };
 }
 
 // **************** END USER CRUD *********************** //

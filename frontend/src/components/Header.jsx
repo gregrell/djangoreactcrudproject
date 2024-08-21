@@ -18,8 +18,7 @@ const Header = () => {
         Super user: Greg, password:3686 <br /> Logged in: <br />
         authcontext: user ID: {user && user.user_id} <br />
         authcontext user name: {user && user.username} <br />
-        appSettings user:{" "}
-        {appSettings.userState.user ? appSettings.userState.user.username : ""}
+        appSettings user: {appSettings.userState.user?.username}
         <br />
       </p>
       <Link to="/">notes</Link>
