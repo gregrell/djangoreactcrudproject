@@ -16,26 +16,28 @@ export function useUserCRUD() {
     } else {
       //not first call
     }
-  });
+  }, [user]);
 
-  async function getUser(
-    id = id,
-    username = username,
-    email = email,
-    authcontext = authcontext
-  ) {
+  async function getUser({
+    id = "",
+    username = "",
+    email = "",
+    authcontext = authcontext,
+  } = {}) {
     const requestOptions = requestBuilder("GET", authcontext, {
       id: id,
       username: username,
       email: email,
     });
+    console.log("get request options: " + requestOptions.body);
 
     await axios
-      .get(`users/`, requestOptions.body, {
+      .get(`users/${id}`, requestOptions.body, {
+        // needs work here
         headers: requestOptions.headers,
       })
       .then((data) => {
-        setUser(data);
+        setUser(data.data);
       })
       .catch((error) => {
         console.log(error);

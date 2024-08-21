@@ -6,11 +6,15 @@ import { useContext, createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { jwtEncode } from "jwt-encode";
 import { useNavigate } from "react-router-dom";
+import { useUserCRUD } from "../utils/api";
+import { TheContext } from "../context/MyContext";
 
 const authcontextdata = createContext(null);
 
 const AuthContext = ({ children, ...rest }) => {
   let navigate = useNavigate();
+  const userCRUD = useUserCRUD();
+  const appSettings = useContext(TheContext);
 
   let [user, setUser] = useState(() =>
     localStorage.getItem("user")
@@ -106,10 +110,17 @@ const AuthContext = ({ children, ...rest }) => {
     let interval = setInterval(() => {
       if (user) {
         refreshToken();
+        userCRUD.getUser({ id: user.user_id, authcontext: authcontextvalue });
+        console.log(userCRUD.user);
       }
-    }, 60000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [user, loaded]);
+
+  //Use effect to set the global user in the app settings context
+  React.useEffect(() => {
+    appSettings.userState.setUser(userCRUD.user);
+  }, [userCRUD.user]);
 
   let authcontextvalue = {
     loginUser,

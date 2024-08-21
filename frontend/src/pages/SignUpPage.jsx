@@ -36,7 +36,6 @@ const SignUpPage = () => {
 
     success = await useUser.createUser(user);
     if (success) {
-      //Navigate("/login");
       navigate("/login");
     } else {
       console.log("could not create user");
