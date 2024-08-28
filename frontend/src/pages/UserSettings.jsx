@@ -10,22 +10,25 @@ const UserSettings = ({ params }) => {
   const [extendedUserInfo] = useExtendedUserInfoCrud(authcontext);
   const appSettings = useContext(TheContext);
 
-  appSettings.userState.setUser("fuck");
+  //appSettings.userState.setUser(user);
+
+  console.log("rendered UserSettings");
 
   return (
     <div>
       User Settings Page Start
       <br />
       <div>
-        <p>User Name: {user.username}</p>
+        <p>User Name: {user?.username}</p>
         <br />
-        <p>Email: {user.email}</p>
+        <p>Email: {user?.email}</p>
         <br />
-        <p>First Name: {user.first_name}</p>
+        <p>First Name: {user?.first_name}</p>
         <br />
-        <p>Last Name: {appSettings.userState.user}</p>
+        {/*  <p>Last Name: {appSettings.userState?.user}</p>
         <br />
-        <p>DOB: {extendedUserInfo?.dob}</p>
+        
+        <p>DOB: {extendedUserInfo?.dob}</p> */}
       </div>
       <br />
       User Settings Page End

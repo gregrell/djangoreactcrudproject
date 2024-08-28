@@ -9,6 +9,8 @@ import { TheContext } from "../context/MyContext";
 import { useGetNotes } from "../utils/api";
 
 const NotesListPage = () => {
+  console.log("rendered Notes List Page");
+
   const navigate = useNavigate();
   const notes = useGetNotes();
 

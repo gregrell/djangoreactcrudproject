@@ -36,7 +36,15 @@ export function useUserCRUD() {
         headers: requestOptions.headers,
       })
       .then((data) => {
-        setUser(data.data);
+        if (
+          !user ||
+          user.email != data.data.email ||
+          user.username != data.data.username ||
+          user.firstname != data.data.firstname ||
+          user.lastname != data.data.lastname
+        ) {
+          setUser(data.data); //only set this user with the new data if it is different than the current user state
+        }
       })
       .catch((error) => {
         console.log(error);
