@@ -16,7 +16,13 @@
 			<label for="birthday">Birthday:</label>
 			<input type="date" id="birthday" bind:value={formState.birthday} />
 		{/if}
-		<button onclick={() => formState.step--} disabled={formState.step === 0}>Previous</button>
+		<button
+			onclick={() => {
+				formState.step--;
+				formState.errorMess = '';
+			}}
+			disabled={formState.step === 0}>Previous</button
+		>
 		{#if formState.step < 2}
 			<button
 				onclick={() => {
@@ -33,7 +39,7 @@
 		{/if}
 		<p>Current Step: {formState.step}</p>
 		{#if formState.errorMess}
-			<p>Error Message: {formState.errorMess}</p>
+			<p class="error">Error Message: {formState.errorMess}</p>
 		{/if}
 
 		{#if formState.step === 2}
@@ -45,4 +51,7 @@
 </main>
 
 <style>
+	.error {
+		color: red;
+	}
 </style>

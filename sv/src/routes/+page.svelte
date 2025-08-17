@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Header from './Header.svelte';
-	import Component1 from './Component1.svelte';
+	//import Component1 from './Component1.svelte';
+	import Component2 from './Component2.svelte';
 	let name = $state('Greg'); // normal state rune
 	let full_name = $derived('Hello full name ' + name); //derived state rune
 	let status: 'OPEN' | 'CLOSED' = $state('OPEN');
@@ -17,4 +18,4 @@
 <button onclick={toggle}>Toggle Status</button>
 <p>{full_name}</p> -->
 
-<Component1 />
+<Component2 />
